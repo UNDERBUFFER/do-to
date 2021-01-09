@@ -1,9 +1,9 @@
 
 import { Request, Response } from 'express'
-import { Controller } from './entities'
+import { Controller, DatabaseMixin } from './entities'
 
 
-export class MainController implements Controller {
+export class MainController extends DatabaseMixin implements Controller {
     get(request: Request, response: Response): void {
         response.send('hello get')
     }
@@ -13,7 +13,7 @@ export class MainController implements Controller {
 }
 
 
-export class AccurateController implements Controller {
+export class AccurateController extends DatabaseMixin implements Controller {
     get(request: Request, response: Response): void {
         response.send('hello get')
     }

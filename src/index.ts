@@ -3,7 +3,7 @@ import express from 'express'
 import path from 'path'
 import bodyParser from 'body-parser'
 import { MongoClient } from 'mongodb'
-import { Router } from './router'
+import { setUpRouter } from './router'
 import { MONGODB_CONNECTION_STRING } from './settings'
 
 
@@ -15,8 +15,14 @@ app.use(bodyParser.urlencoded({
     extended: true
 }))
 app.use('/static', express.static( path.join(__dirname, '/public') ))
-app.use('/', Router)
 
-app.listen( 3000, (): void => {
-    console.log(`[server]: server is running`)
+MongoClient.connect( MONGODB_CONNECTION_STRING, (error, client) => {
+    console.log(`[server]: connect to db...`)
+    if (error) throw error
+
+    app.use('/', setUpRouter( client.db('main').collection('notes') ))
+
+    app.listen( 3000, (): void => {
+        console.log(`[server]: server is running!`)
+    } )        
 } )
