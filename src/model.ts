@@ -1,14 +1,11 @@
 
-import mongodb from 'mongodb'
+import { ObjectID } from 'mongodb'
 
 
 export interface Note {
+    _id?: ObjectID
     done: boolean
     fail: boolean
     description: string
-}
-
-export interface NoteList {
-    _id?: mongodb.ObjectID,
-    notes: Note[]
+    key: string
 }

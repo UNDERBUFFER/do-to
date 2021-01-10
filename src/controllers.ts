@@ -1,8 +1,9 @@
 
 import { Request, Response } from 'express'
-import {  MongoError } from 'mongodb'
+import { MongoError } from 'mongodb'
+import crypto from 'crypto'
 import { Controller, DatabaseMixin } from './entities'
-import { NoteList } from './model'
+import { Note } from './model'
 
 
 export class MainController extends DatabaseMixin implements Controller {
@@ -11,17 +12,19 @@ export class MainController extends DatabaseMixin implements Controller {
     }
     post = (request: Request, response: Response): void => {
         const descriptions: string[] = Object.values( request.body )
-        const noteList: NoteList = { notes: [] }
+        const notes: Note[] = []
+        const uniqueKey: string = crypto.randomBytes(64).toString('hex').slice(0, 20)
         for (let description of descriptions) {
-            noteList.notes.push( {
+            notes.push( {
                 done: false,
                 fail: false,
-                description: description
+                description: description,
+                key: uniqueKey
             } )
         }
-        this.collection.insertOne( noteList, (error: MongoError, result: any): void => {
+        this.collection.insertMany( notes, (error: MongoError, result: any) => {
             if (error) throw error
-            response.redirect(result.ops[0]._id)
+            response.redirect(`/${uniqueKey}`)
         } )
     }
 }

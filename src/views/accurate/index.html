@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="notes-area">
+    {{#each notes}}
+    <div id="note-with-input">
+        <div class="note-text">{{ this.description }}</div>
+        <input type="button" value="❌" class="note-fail">
+        <input type="button" value="✅" class="note-done">
+    </div>
+    {{/each}}        
+    </div>
+</body>
+</html>
