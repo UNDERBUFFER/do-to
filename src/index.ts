@@ -2,7 +2,7 @@
 import express from 'express'
 import path from 'path'
 import bodyParser from 'body-parser'
-import { MongoClient } from 'mongodb'
+import { MongoClient, MongoError } from 'mongodb'
 import { setUpRouter } from './router'
 import { MONGODB_CONNECTION_STRING } from './settings'
 
@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({
 }))
 app.use('/static', express.static( path.join(__dirname, '/public') ))
 
-MongoClient.connect( MONGODB_CONNECTION_STRING, (error, client) => {
+MongoClient.connect( MONGODB_CONNECTION_STRING, (error: MongoError, client: MongoClient) => {
     console.log(`[server]: connect to db...`)
     if (error) throw error
 

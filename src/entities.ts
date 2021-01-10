@@ -1,6 +1,6 @@
 
 import { Request, Response } from 'express'
-import { Collection } from 'mongodb';
+import { Collection } from 'mongodb'
 
 
 export interface Controller {
