@@ -22,7 +22,7 @@ export class MainController extends DatabaseMixin implements Controller {
                 key: uniqueKey
             } )
         }
-        this.collection.insertMany( notes, (error: MongoError, result: any) => {
+        this.collection.insertMany( notes, (error: MongoError, result: any): void => {
             if (error) throw error
             response.redirect(`/${uniqueKey}`)
         } )
@@ -31,8 +31,11 @@ export class MainController extends DatabaseMixin implements Controller {
 
 
 export class AccurateController extends DatabaseMixin implements Controller {
-    get(request: Request, response: Response): void {
-        response.send('hello get')
+    get = (request: Request, response: Response): void => {
+        const key: string = request.params.id
+        this.collection.find({ key }).toArray( (error: MongoError, notes: any): void => {
+            response.render('accurate/index.hbs', { notes })
+        } )
     }
     post(request: Request, response: Response): void {
         response.send('hello post')

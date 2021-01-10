@@ -9,11 +9,11 @@
     <div id="notes-area">
     {{#each notes}}
     <div id="note-with-input">
-        <div class="note-text">{{ this.description }}</div>
-        <input type="button" value="❌" class="note-fail">
-        <input type="button" value="✅" class="note-done">
+        <div class="note-text">{{this.description}}</div>
+        <input type="button" value="❌" class="note-fail" id="{{this._id}}">
+        <input type="button" value="✅" class="note-done" id="{{this._id}}">
     </div>
-    {{/each}}        
+    {{/each}}
     </div>
 </body>
 </html>
