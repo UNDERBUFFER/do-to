@@ -37,7 +37,26 @@ export class AccurateController extends DatabaseMixin implements Controller {
             response.render('accurate/index.hbs', { notes })
         } )
     }
-    post(request: Request, response: Response): void {
-        response.send('hello post')
+    post = (request: Request, response: Response): void => {
+        const requestData: Note = request.body
+        if (requestData.hasOwnProperty('_id') === true) {
+            this.collection.updateOne( {_id: requestData._id}, {$set: requestData}, (error: MongoError, result: any): void => {
+                if (error) throw error
+                response.redirect(`/${requestData.key}`)
+            } )
+        }
+        else {
+            const key: string = request.params.id
+            const note: Note = {
+                done: false,
+                fail: false,
+                description: requestData.description,
+                key: key
+            }
+            this.collection.insertOne( note, (error: MongoError, result: any): void => {
+                if (error) throw error
+                response.redirect(`/${key}`)
+            } )
+        }
     }
 }
