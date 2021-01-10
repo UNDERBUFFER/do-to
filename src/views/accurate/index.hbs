@@ -6,14 +6,24 @@
     <title>Document</title>
 </head>
 <body>
+    <form action="" method="post" id="creating-list-form"></form>
     <div id="notes-area">
+
     {{#each notes}}
     <div id="note-with-input">
-        <div class="note-text">{{this.description}}</div>
-        <input type="button" value="❌" class="note-fail" id="{{this._id}}">
-        <input type="button" value="✅" class="note-done" id="{{this._id}}">
+        <div class="note-text" id="text-{{this._id}}">{{this.description}}</div>
+        <input type="button" value="❌" class="note-fail" id="fail-{{this._id}}">
+        <input type="button" value="✅" class="note-done" id="done-{{this._id}}">
     </div>
     {{/each}}
+
+    <div id="creating-list">
+        <input type="text" name='note' class="note" form="creating-list-form">
+        <input type="submit" value="Отправить" class="note" form="creating-list-form">        
     </div>
+
+    </div>
+    <script src="/static/accurate/javascript/utils.js"></script>
+    <script src="/static/accurate/javascript/events.js"></script>
 </body>
 </html>
